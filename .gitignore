@@ -1,0 +1,9 @@
+env/bin/*
+env/lib/*
+env/include/*
+env/local/*
+*.pyc
+*.mak~
+*.py~
+.vagrant
+*.egg-info
