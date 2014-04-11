@@ -7,3 +7,4 @@ env/local/*
 *.py~
 .vagrant
 *.egg-info
+sms.xml
