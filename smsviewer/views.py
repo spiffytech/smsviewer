@@ -10,5 +10,6 @@ def my_view(request):
 
     root = tree.getroot()
 
-    return {"messages": sorted([e for e in root if e.get("contact_name") == "Lacey Shankle"], key=lambda message: message.get("date"))}
-    return {'project': 'smsviewer'}
+    els = root.xpath("*[@contact_name='Lacey Shankle']")
+
+    return {"messages": sorted(els, key=lambda message: message.get("date"))}
