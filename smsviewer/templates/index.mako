@@ -24,22 +24,35 @@
 
         <!-- Add your site or application content here -->
         <% import datetime %>
+        <% import ago %>
         <% sender = None %>
         % for message in messages:
             <% this_sender = "brian" if message.get("type") == "2" else "lacey" %>
-            % if this_sender != sender:
-                % if sender is not None:
-                    </div>
+            <div class="${this_sender} message">
+                % if message.get("date") is None:
+                    <% import pdb; pdb.set_trace() %>
                 % endif
-                <div class="${this_sender}">
-                <h3>${this_sender} @ ${datetime.datetime.fromtimestamp(int(message.get("date"))/1000).strftime('%Y-%m-%d %H:%M:%S')}</h3>
-                
-            % endif
-            <p>${message.get("body")}</p>
+                <h3>
+                    <% ts = datetime.datetime.fromtimestamp(int(message.get("date"))/1000) %>
+                    <% human = ago.human(ts) %>
+                    <% strf = ts.strftime('%Y-%m-%d %H:%M:%S') %>
+                    ${this_sender} @ <abbr title="${strf}">${human}</abbr>
+                </h3>
+                % if message.tag == "mms":
+                    an_mms
+                   <% img = message.xpath("parts/part[@data]")[0] %>
+                   <img style="width: 100%;" src="${"data:" + img.get("ct") + ";base64," + img.get("data")}">
+                % endif
+
+                % if message.get("body") is not None:
+                    <p>${message.get("body")}</p>
+                % endif
+            </div>
+
             <% sender = this_sender %>
         % endfor
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="/static/js/plugins.js"></script>
         <script src="/static/js/main.js"></script>

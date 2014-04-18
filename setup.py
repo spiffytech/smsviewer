@@ -11,6 +11,8 @@ requires = [
     'pyramid_debugtoolbar',
     'waitress',
     'lxml',
+    'ago',
+    'pyramid_mako',
     ]
 
 setup(name='smsviewer',
