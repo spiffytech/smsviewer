@@ -15,8 +15,10 @@ def my_view(request):
     root = tree.getroot()
     els = root.xpath("*[@contact_name='Lacey Shankle']")
     smses = root.xpath("//smses/sms[@contact_name='Lacey Shankle']")
-    mmses = root.xpath("//smses/mms[@ct_l != 'null' and @contact_name='Lacey Shankle' and parts/part[@data]]")
+    mmses = root.xpath("//smses/mms[@contact_name='Lacey Shankle' and parts/part[@data]]")
     #import pdb; pdb.set_trace()
+    print len(smses)
+    print len(mmses)
     els = smses + mmses
 
     return {"messages": sorted(els, key=lambda message: message.get("date"))}
